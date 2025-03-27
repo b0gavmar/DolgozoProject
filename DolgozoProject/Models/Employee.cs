@@ -27,7 +27,7 @@ namespace DolgozoProject.Models
         public string Email => _email;
         public int Salary => _salary;
         public double Adokulcs => _adokulcs;
-        public double Ado => _salary*Adokulcs;
+        public double Ado => Math.Round(_salary*Adokulcs);
         public int PayCycles => _payCycles;
 
         public void IncreaseSalary(int amount)
