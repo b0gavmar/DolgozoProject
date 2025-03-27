@@ -43,16 +43,16 @@ namespace DolgozoProject.Repos
             Console.WriteLine(_context.Dolgozok.Sum(d => d.Salary));
         }
 
-        public async Task<Dictionary<string,int>> GroupBySalary()
+        public async Task<Dictionary<string, int>> GroupBySalary()
         {
             var d = new Dictionary<string, int>{
-                {"400000 Ft alatt",0 },
-                { "400000 - 500000 Ft között",0 },
-                { "500000 Ft felett",0 },
-            };
+                    {"400000 Ft alatt",0 },
+                    { "400000 - 500000 Ft között",0 },
+                    { "500000 Ft felett",0 },
+                };
 
-            var employees = _context.Dolgozok.ToListAsync();
-            foreach (var e in employees.Result)
+            var employees = await _context.Dolgozok.ToListAsync();
+            foreach (var e in employees)
             {
                 if (e.Salary < 400000)
                 {
@@ -68,7 +68,51 @@ namespace DolgozoProject.Repos
                 }
             }
             return d;
-            
+
+        }
+
+        public async Task<List<NameAdditionalProp>> GetAdok()
+        {
+            return await _context.Dolgozok.Select(d => new NameAdditionalProp{ Name = d.Name, AdditionalProp = d.Ado }).ToListAsync();
+        }
+
+        public async Task<List<NameAdditionalProp>> GetPayCycles()
+        {
+            return await _context.Dolgozok.Select(d => new NameAdditionalProp { Name = d.Name, AdditionalProp = d.PayCycles }).ToListAsync();
+        }
+
+        public async Task AddNew(string email, string name, int salary)
+        {
+            var employee = new Employee(email, name);
+            employee.SetSalary(salary);
+            if(await _context.Dolgozok.AnyAsync(d => d.Email == email))
+            {
+                throw new ArgumentException("Employee with this email already exist");
+            }
+            _context.AddAsync(employee);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task ChangeSalary(string email, int newSalary)
+        {
+            if (!await _context.Dolgozok.AnyAsync(d => d.Email == email))
+            {
+                throw new ArgumentException("Employee with this email does not exist");
+            }
+            var employee = await _context.Dolgozok.FirstAsync(d => d.Email == email);
+            employee.SetSalary(newSalary);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Remove(string email)
+        {
+            if (!await _context.Dolgozok.AnyAsync(d => d.Email == email))
+            {
+                throw new ArgumentException("Employee with this email does not exist");
+            }
+            var employee = await _context!.Dolgozok.FirstOrDefaultAsync(d => d.Email == email);
+            _context.Remove(employee);
+            await _context.SaveChangesAsync();
         }
     }
 }

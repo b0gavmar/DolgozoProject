@@ -47,3 +47,34 @@ foreach (KeyValuePair<string,int> kvp in await repo.GroupBySalary())
 {
     Console.WriteLine($"{kvp.Key}: {kvp.Value}");
 }
+Console.WriteLine("6");
+foreach(NameAdditionalProp na in await repo.GetAdok())
+{
+    Console.WriteLine(na.Name + " - Adó: " + na.AdditionalProp);
+}
+Console.WriteLine("7");
+foreach(NameAdditionalProp na in await repo.GetPayCycles())
+{
+    Console.WriteLine(na.Name + " - PayCycles: " + na.AdditionalProp);
+}
+Console.WriteLine("8");
+try
+{
+    await repo.AddNew("email", "nev", 1000);
+}
+catch (Exception e)
+{
+    Console.WriteLine(e.Message);
+}
+foreach (Employee e in await repo.GetAll())
+{
+    Console.WriteLine(e);
+}
+Console.WriteLine("9");
+await repo.ChangeSalary("email", 1000);
+foreach (NameAdditionalProp na in await repo.GetPayCycles())
+{
+    Console.WriteLine(na.Name + " - PayCycles: " + na.AdditionalProp);
+}
+Console.WriteLine("10");
+await repo.Remove("email");
