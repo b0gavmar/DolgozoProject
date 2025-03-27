@@ -31,7 +31,7 @@ foreach(Employee e in await repo.GetAll())
     Console.WriteLine(e);
 }
 Console.WriteLine("2");
-foreach (Employee e in await repo.GetAllHigherThan(48000))
+foreach (Employee e in await repo.GetAllHigherThan(480000))
 {
     Console.WriteLine(e);
 }
@@ -78,3 +78,7 @@ foreach (NameAdditionalProp na in await repo.GetPayCycles())
 }
 Console.WriteLine("10");
 await repo.Remove("email");
+foreach (Employee e in await repo.GetAll())
+{
+    Console.WriteLine(e);
+}

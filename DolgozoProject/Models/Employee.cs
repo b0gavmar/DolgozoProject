@@ -47,7 +47,6 @@ namespace DolgozoProject.Models
                 throw new ArgumentException("Amount must be positive");
             }
             _salary = amount;
-            _payCycles++;
         }
 
 

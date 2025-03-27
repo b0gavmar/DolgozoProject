@@ -100,7 +100,7 @@ namespace DolgozoProject.Repos
                 throw new ArgumentException("Employee with this email does not exist");
             }
             var employee = await _context.Dolgozok.FirstAsync(d => d.Email == email);
-            employee.SetSalary(newSalary);
+            employee.IncreaseSalary(newSalary);
             await _context.SaveChangesAsync();
         }
 
