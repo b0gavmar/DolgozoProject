@@ -22,6 +22,8 @@ namespace DolgozoProject.Models
         }
 
         public string Name { get; set; }
+        public string Email => _email;
+        public int Salary => _salary;
         public double Adokulcs => 0.27;
         public double Ado => _salary*Adokulcs;
         public int TimesPaid { get; private set; } = 0;
