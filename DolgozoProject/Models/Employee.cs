@@ -26,7 +26,7 @@ namespace DolgozoProject.Models
         public int Salary => _salary;
         public double Adokulcs => 0.27;
         public double Ado => _salary*Adokulcs;
-        public int TimesPaid { get; private set; } = 0;
+        //public int TimesPaid { get; private set; } = 0;
 
         public void IncreaseSalary(int amount)
         {
@@ -39,7 +39,7 @@ namespace DolgozoProject.Models
 
         public override string ToString()
         {
-            return $"{Name}\n{_email}\n{_salary}\n{Ado}\n{TimesPaid}";
+            return $"{Name}\n{_email}\n{_salary}\n{Ado}";
         }
     }
 }
